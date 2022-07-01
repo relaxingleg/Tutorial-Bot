@@ -12,7 +12,9 @@ public class Main {
     public static void main(String[] args) throws LoginException {
         JDA jda = JDABuilder.createDefault(Token.TOKEN).build();
         jda.addEventListener(new Listeners());
-        jda.addEventListener(new Sum());
+        CommandManager manager = new CommandManager();
+        manager.add(new Sum());
+        jda.addEventListener(manager);
         /*
             Global - Used anywhere
             Guild - Used in certain guilds
