@@ -1,5 +1,6 @@
 package com.relaxingleg;
 
+import com.relaxingleg.commands.Buttons;
 import com.relaxingleg.commands.Embed;
 import com.relaxingleg.commands.Sum;
 import net.dv8tion.jda.api.JDA;
@@ -16,6 +17,7 @@ public class Main {
         CommandManager manager = new CommandManager();
         manager.add(new Sum());
         manager.add(new Embed());
+        manager.add(new Buttons());
         jda.addEventListener(manager);
         /*
             Global - Used anywhere
