@@ -11,21 +11,21 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mute implements ICommand {
+public class Unmute implements ICommand {
     @Override
     public String getName() {
-        return "mute";
+        return "unmute";
     }
 
     @Override
     public String getDescription() {
-        return "Will mute a member";
+        return "Will unmute a user";
     }
 
     @Override
     public List<OptionData> getOptions() {
         List<OptionData> options = new ArrayList<>();
-        options.add(new OptionData(OptionType.USER, "muted", "The user to mute", true));
+        options.add(new OptionData(OptionType.USER, "muted", "The user to unmute", true));
         return options;
     }
 
@@ -38,9 +38,9 @@ public class Mute implements ICommand {
             Member mutedMember = event.getOption("muted").getAsMember();
             Role muteRole = guild.getRoleById(993897538262401066L);
             Role defaultRole = guild.getRoleById(992826406604111962L);
-            guild.removeRoleFromMember(mutedMember, defaultRole).queue();
-            guild.addRoleToMember(mutedMember, muteRole).queue();
-            event.reply("Muted member").queue();
+            guild.removeRoleFromMember(mutedMember, muteRole).queue();
+            guild.addRoleToMember(mutedMember, defaultRole).queue();
+            event.reply("Unmuted member").queue();
         } else {
             event.reply("You do not have permission to execute this command").queue();
         }

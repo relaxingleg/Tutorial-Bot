@@ -8,6 +8,7 @@ import com.relaxingleg.commands.Mute;
 import com.relaxingleg.commands.Staff;
 import com.relaxingleg.commands.Sum;
 import com.relaxingleg.commands.UnStaff;
+import com.relaxingleg.commands.Unmute;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -28,6 +29,7 @@ public class Main {
         manager.add(new Mute());
         manager.add(new Staff());
         manager.add(new UnStaff());
+        manager.add(new Unmute());
         jda.addEventListener(manager);
     }
 }
