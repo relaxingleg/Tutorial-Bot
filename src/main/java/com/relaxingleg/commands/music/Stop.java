@@ -1,32 +1,30 @@
-package com.relaxingleg.commands;
+package com.relaxingleg.commands.music;
 
 import com.relaxingleg.ICommand;
+import com.relaxingleg.lavaplayer.GuildMusicManager;
 import com.relaxingleg.lavaplayer.PlayerManager;
+import com.relaxingleg.lavaplayer.TrackScheduler;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Play implements ICommand {
+public class Stop implements ICommand {
     @Override
     public String getName() {
-        return "play";
+        return "stop";
     }
 
     @Override
     public String getDescription() {
-        return "Will play a song";
+        return "Will stop the bot playing";
     }
 
     @Override
     public List<OptionData> getOptions() {
-        List<OptionData> options = new ArrayList<>();
-        options.add(new OptionData(OptionType.STRING, "name", "Name of the song to play", true));
-        return options;
+        return null;
     }
 
     @Override
@@ -43,16 +41,19 @@ public class Play implements ICommand {
         GuildVoiceState selfVoiceState = self.getVoiceState();
 
         if(!selfVoiceState.inAudioChannel()) {
-            event.getGuild().getAudioManager().openAudioConnection(memberVoiceState.getChannel());
-        } else {
-            if(selfVoiceState.getChannel() != memberVoiceState.getChannel()) {
-                event.reply("You need to be in the same channel as me").queue();
-                return;
-            }
+            event.reply("I am not in an audio channel").queue();
+            return;
         }
 
-        PlayerManager playerManager = PlayerManager.get();
-        event.reply("Playing").queue();
-        playerManager.play(event.getGuild(), event.getOption("name").getAsString());
+        if(selfVoiceState.getChannel() != memberVoiceState.getChannel()) {
+            event.reply("You are not in the same channel as me").queue();
+            return;
+        }
+
+        GuildMusicManager guildMusicManager = PlayerManager.get().getGuildMusicManager(event.getGuild());
+        TrackScheduler trackScheduler = guildMusicManager.getTrackScheduler();
+        trackScheduler.getQueue().clear();
+        trackScheduler.getPlayer().stopTrack();
+        event.reply("Stopped").queue();
     }
 }
