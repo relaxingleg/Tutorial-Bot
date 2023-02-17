@@ -5,13 +5,13 @@ import com.relaxingleg.commands.Buttons;
 import com.relaxingleg.commands.Embed;
 import com.relaxingleg.commands.Modals;
 import com.relaxingleg.commands.Mute;
+import com.relaxingleg.commands.Play;
 import com.relaxingleg.commands.Staff;
 import com.relaxingleg.commands.Sum;
 import com.relaxingleg.commands.UnStaff;
 import com.relaxingleg.commands.Unmute;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Guild;
 
 import javax.security.auth.login.LoginException;
 
@@ -30,6 +30,7 @@ public class Main {
         manager.add(new Staff());
         manager.add(new UnStaff());
         manager.add(new Unmute());
+        manager.add(new Play());
         jda.addEventListener(manager);
     }
 }
